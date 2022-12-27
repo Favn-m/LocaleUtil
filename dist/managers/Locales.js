@@ -1,12 +1,12 @@
 import LocaleManager from "./LocaleManager.js";
 export default class Locales {
     _locales = new Map;
-    path = '/locales';
+    _path;
     /**
      *
      * @param path Path to the folder where locales are located
      */
-    constructor(path) {
+    constructor(path = '/locales') {
         this.setPath(path);
     }
     /**
@@ -17,10 +17,11 @@ export default class Locales {
     setPath(path) {
         if (!path)
             return this;
-        if (!(/^(https|file|http):\/\/.*/i.test(path)))
-            path = "file://" + path;
-        this.path = path;
+        this._path = Locales.resolvePath(path);
         return this;
+    }
+    get path() {
+        return this._path;
     }
     async getLocale(language) {
         if (this._locales.has(language))
@@ -32,5 +33,14 @@ export default class Locales {
     async getString(language, key) {
         const locale = await this.getLocale(language);
         return await locale.getString(key);
+    }
+    static resolvePath(path) {
+        if (path.startsWith('.'))
+            return this.resolvePath(path.slice(1));
+        if (path.startsWith('/'))
+            path = process.cwd() + path;
+        if (!(/^(https|file|http):\/\/.*/i.test(path)))
+            path = "file://" + path;
+        return path;
     }
 }
