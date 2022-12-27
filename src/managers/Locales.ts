@@ -6,7 +6,7 @@ export default class Locales{
 
     /**
      * 
-     * @param path Path including protocol (`file://` or `https://`)
+     * @param path Path to the folder where locales are located
      */
     constructor(path?: string){
         this.setPath(path);
@@ -14,7 +14,7 @@ export default class Locales{
 
     /**
      * 
-     * @param path Path including protocol (`file://` or `https://`)
+     * @param path Path to the folder where locales are located
      * @returns 
      */
     public setPath(path: string): Locales{

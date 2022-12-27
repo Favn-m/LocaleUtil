@@ -4,17 +4,21 @@ export default class Locales {
     path = '/locales';
     /**
      *
-     * @param path Path including protocol (`file://` or `https://`)
+     * @param path Path to the folder where locales are located
      */
     constructor(path) {
-        this.path = path;
+        this.setPath(path);
     }
     /**
      *
-     * @param path Path including protocol (`file://` or `https://`)
+     * @param path Path to the folder where locales are located
      * @returns
      */
     setPath(path) {
+        if (!path)
+            return this;
+        if (!(/^(https|file|http):\/\/.*/i.test(path)))
+            path = "file://" + path;
         this.path = path;
         return this;
     }
