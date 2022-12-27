@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "target": "ESNext",
+        "watch": true,
+        "module": "ESNext",
+        "rootDir": "./src",
+        "baseUrl": "src",
+        "moduleResolution": "NodeNext",
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+    },
+    "include": [
+        "src/**/*.json",
+        "src/**/*.ts"
+    ],
+    "compileOnSave": true,
+}
