@@ -9,7 +9,7 @@ Basically, there is 2 ways to get locale
 
 Most often used if you need to get more than 1 string,<br>
 `<Locales>.getLocale(language: string)`, example:
-```ts
+```js
 //Define path to the locales(including protocol)
 const locales = new Locales("file://"+__dirname+"/locales/");
 
@@ -26,7 +26,7 @@ console.log({
 
 Most often used if you need to get only one string(returns `Promise<string>`),<br>
 `<Locales>.getString(language: string, key: string)`, example:
-```ts
+```js
 //Define path to the locales(including protocol)
 const locales = new Locales("file://"+__dirname+"/locales/");
 
