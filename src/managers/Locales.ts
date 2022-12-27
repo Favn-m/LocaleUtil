@@ -9,7 +9,7 @@ export default class Locales{
      * @param path Path including protocol (`file://` or `https://`)
      */
     constructor(path?: string){
-        this.path = path;
+        this.setPath(path);
     }
 
     /**
@@ -18,6 +18,8 @@ export default class Locales{
      * @returns 
      */
     public setPath(path: string): Locales{
+        if(!path) return this;
+        if(!(/^(https|file|http):\/\/.*/i.test(path))) path = "file://"+path;
         this.path = path;
         return this;
     }
