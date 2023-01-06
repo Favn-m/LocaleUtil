@@ -8,7 +8,7 @@ export default class Locales{
      * 
      * @param path Path to the folder where locales are located
      */
-    constructor(path: string = '/locales'){
+    constructor(path: string = './locales'){
         this.setPath(path);
     }
 
@@ -19,7 +19,7 @@ export default class Locales{
      */
     public setPath(path: string): Locales{
         if(!path) return this;
-        this._path = Locales.resolvePath(path);
+        this._path = path;
         return this;
     }
 
@@ -35,16 +35,8 @@ export default class Locales{
         return result;
     }
 
-    public async getString(language: string, key: string): Promise<string>{
+    public async getString(language: string, key: string, options?: object): Promise<string>{
         const locale = await this.getLocale(language);
-        return await locale.getString(key);
-    }
-
-
-    private static resolvePath(path: string): string{
-        if(path.startsWith('.')) return this.resolvePath(path.slice(1));
-        if(path.startsWith('/')) path = process.cwd()+path;
-        if(!(/^(https|file|http):\/\/.*/i.test(path))) path = "file://"+path;
-        return path;
+        return await locale.getString(key, options);
     }
 }
