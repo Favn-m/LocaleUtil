@@ -10,8 +10,8 @@ Basically, there is 2 ways to get locale
 Most often used if you need to get more than 1 string,<br>
 `<Locales>.getLocale(language: string)`, example:
 ```js
-//Define path to the locales(including protocol)
-const locales = new Locales("file://"+__dirname+"/locales/");
+//Define path to the locales(starts from PROJECT directory)
+const locales = new Locales("./locales/");
 
 const ukrainian = await locales.getLocale('uk-UA');   //Get locale(json file) named "uk-UA"
 const english = await locales.getLocale('en-US');     //Get locale(json file) named "en-US"
@@ -27,8 +27,8 @@ console.log({
 Most often used if you need to get only one string(returns `Promise<string>`),<br>
 `<Locales>.getString(language: string, key: string)`, example:
 ```js
-//Define path to the locales(including protocol)
-const locales = new Locales("file://"+__dirname+"/locales/");
+//Define path to the locales(starts from PROJECT directory)
+const locales = new Locales("./locales/");
 
 console.log({
     ukrainian: await locales.getString('uk-UA', 'hello.world'),    // ukrainian: Привіт, світ!
