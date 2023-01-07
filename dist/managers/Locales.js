@@ -48,7 +48,7 @@ export default class Locales extends EventEmitter {
     }
     getAllStrings(key, selectOptions = {}) {
         const result = {};
-        if (selectOptions?.include?.length > 0) {
+        if (selectOptions.include?.length > 0 && Array.isArray(selectOptions.include)) {
             for (const locale of selectOptions.include) {
                 result[locale] = this._locales.get(locale).getString(key, selectOptions.replace);
             }
