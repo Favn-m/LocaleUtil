@@ -1,6 +1,6 @@
 import LocaleManager from "./LocaleManager.js";
 import fs from "fs/promises";
-import { EventEmitter } from "stream";
+import EventEmitter from "events";
 export default class Locales extends EventEmitter {
     _locales = new Map;
     _path;
@@ -46,7 +46,7 @@ export default class Locales extends EventEmitter {
         const locale = await this.getLocale(language);
         return locale.getString(key, replaceOptions);
     }
-    getAllStrings(key, selectOptions) {
+    getAllStrings(key, selectOptions = {}) {
         const result = {};
         if (selectOptions?.include?.length > 0) {
             for (const locale of selectOptions.include) {
@@ -55,7 +55,7 @@ export default class Locales extends EventEmitter {
         }
         else {
             for (const [locale, value] of this._locales.entries()) {
-                if (!selectOptions.exclude.includes(locale))
+                if (!selectOptions?.exclude?.includes(locale))
                     result[locale] = value.getString(key, selectOptions.replace);
             }
         }

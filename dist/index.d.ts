@@ -1,4 +1,4 @@
-import { EventEmitter } from "stream"
+import EventEmitter from "events";
 
 export class LocaleManager{
     constructor(locales: Locales, language: string);
