@@ -86,7 +86,7 @@ const english = locales.getLocale('en-US');
 
 console.log({
     helloUkrainian: await locales.getString('uk-UA', 'hello.user', { user: 'Favn' }),    // helloUkrainian: Привіт, Favn!
-    helloEnglish: await locales.getString('en-US', 'hello.user', { 'Favn' }),            // helloEnglish: {Hello}, Favn!
+    helloEnglish: await locales.getString('en-US', 'hello.user', { user: 'Favn' }),            // helloEnglish: {Hello}, Favn!
     welcomeEnglish: await english.getString('welcome.user', { 
         user: 'Favn',
         server: 'LocaleUtil support' 
