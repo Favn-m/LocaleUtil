@@ -102,6 +102,8 @@ Note, that you can get all translates __only__ of cached files, I would highly r
 const locales = new Locales({path: "./locales/", fetchOnStart: true});
 
 locales.once('ready', ()=>{
-    console.log(locales.getAllStrings('hello.user', {user: 'Favn'})); //{ 'en-US': 'Welcome, Favn!', 'uk-UA': 'Привіт, Favn!', 'kz-KZ': 'Сәлем, Favn!' }
+    console.log(locales.getAllStrings('hello.user', { replace: { user: 'Favn' }})); //{ 'en-US': 'Welcome, Favn!', 'uk-UA': 'Привіт, Favn!', 'kz-KZ': 'Сәлем, Favn!' }
+    console.log(locales.getAllStrings('hello.user', { exclude: ['en-US'], replace: { user: 'Favn' }})); //{ 'uk-UA': 'Привіт, Favn!', 'kz-KZ': 'Сәлем, Favn!' }
+    console.log(locales.getAllStrings('hello.user', { include: ['uk-UA'], replace: { user: 'Favn' }})); //{ 'uk-UA': 'Привіт, Favn!' }
 })
 ```

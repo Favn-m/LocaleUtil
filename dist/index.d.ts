@@ -22,6 +22,12 @@ interface LocalesOptions {
     fetchAllOnStart?: boolean
 }
 
+interface SelectLocaleOptions {
+    include?: Array<string>
+    exclude?: Array<string>
+    replace?: object
+}
+
 export class Locales extends EventEmitter{
     constructor(options: LocalesOptions);
 
@@ -36,5 +42,5 @@ export class Locales extends EventEmitter{
     public getLocale(language: string): Promise<LocaleManager>;
     
     public getString(language: string, key: string, options?: object): Promise<string>;
-    public getAllStrings(key: string, options?: object): object
+    public getAllStrings(key: string, options?: SelectLocaleOptions): object
 }

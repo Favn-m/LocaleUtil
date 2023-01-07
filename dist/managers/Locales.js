@@ -42,14 +42,22 @@ export default class Locales extends EventEmitter {
         this._locales.set(language, result);
         return result;
     }
-    async getString(language, key, options) {
+    async getString(language, key, replaceOptions) {
         const locale = await this.getLocale(language);
-        return locale.getString(key, options);
+        return locale.getString(key, replaceOptions);
     }
-    getAllStrings(key, options) {
+    getAllStrings(key, selectOptions) {
         const result = {};
-        for (const [locale, value] of this._locales.entries()) {
-            result[locale] = value.getString(key, options);
+        if (selectOptions?.include?.length > 0) {
+            for (const locale of selectOptions.include) {
+                result[locale] = this._locales.get(locale).getString(key, selectOptions.replace);
+            }
+        }
+        else {
+            for (const [locale, value] of this._locales.entries()) {
+                if (!selectOptions.exclude.includes(locale))
+                    result[locale] = value.getString(key, selectOptions.replace);
+            }
         }
         return result;
     }
