@@ -1,5 +1,5 @@
 # LocaleUtil
-Util to easily manage locales, working with json
+Util to easily manage locales, working with json<br>
  `-` Easy to use utility to work with locales!<br>
  `-` Almost fully uses promises<br>
  `-` Supports object path*<br>
