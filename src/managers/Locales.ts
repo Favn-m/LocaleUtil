@@ -1,15 +1,37 @@
 import LocaleManager from "./LocaleManager.js";
+import fs from "fs/promises";
+import { EventEmitter } from "stream";
 
-export default class Locales{
+interface LocalesOptions {
+    /**
+     * Path to the locales folder
+     */
+    path?: string
+    /**
+     * Whether to get fetch all locales when initializing `Locales`, or do it manually
+     * Note, that if you want to get all translations for specific string, it will get only from cached locales(locales you have already worked with after process started)
+     */
+    fetchAllOnStart?: boolean
+}
+
+export default class Locales extends EventEmitter{
     private _locales: Map<string, LocaleManager> = new Map<string, LocaleManager>;
     private _path;
 
-    /**
-     * 
-     * @param path Path to the folder where locales are located
-     */
-    constructor(path: string = './locales'){
-        this.setPath(path);
+    constructor(options: LocalesOptions = {path: './locales', fetchAllOnStart: true}){
+        super();
+        this.setPath(options.path);
+        if(options.fetchAllOnStart) this.fetchAllLocales().then(()=>{super.emit('ready', this)});
+        else super.emit('ready', this)
+    }
+
+    private async fetchAllLocales(){
+        const files = await fs.readdir(this._path);
+        const promises = [];
+        for(const file of files){
+            if(file.endsWith('.json')) promises.push(this.getLocale(file.slice(0, file.length-5)));
+        }
+        return await Promise.all(promises);
     }
 
     /**
@@ -37,6 +59,14 @@ export default class Locales{
 
     public async getString(language: string, key: string, options?: object): Promise<string>{
         const locale = await this.getLocale(language);
-        return await locale.getString(key, options);
+        return locale.getString(key, options);
+    }
+
+    public getAllStrings(key: string, options?: object): object{
+        const result = {};
+        for(const [locale, value] of this._locales.entries()){
+            result[locale]=value.getString(key, options);
+        }
+        return result;
     }
 }

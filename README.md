@@ -35,6 +35,8 @@ or multi-object* path(example below):
 ```
 They both support [replaceable-variables](#using-replaceable-variables), in examples above you can 
 
+Language name is name of the json file, that holds translates for this language
+
 Basically, there is 2 ways to interact with locales
 ## Get locale manager
 
@@ -43,7 +45,7 @@ You can easily do it with LocaleUtil<br>
 `<Locales>.getLocale(language: string)`, example:
 ```js
 //Define path to the locales(starts from PROJECT directory)
-const locales = new Locales("./locales/");
+const locales = new Locales({path: "./locales/"});
 
 const ukrainian = await locales.getLocale('uk-UA');   //Get locale(json file) named "uk-UA"
 const english = await locales.getLocale('en-US');     //Get locale(json file) named "en-US"
@@ -60,7 +62,7 @@ Most often used if you need to get only one string(returns `Promise<string>`),<b
 `<Locales>.getString(language: string, key: string)`, example:
 ```js
 //Define path to the locales(starts from PROJECT directory)
-const locales = new Locales("./locales/");
+const locales = new Locales({path: "./locales/"});
 
 console.log({
     ukrainian: await locales.getString('uk-UA', 'hello.world'),    // ukrainian: Привіт, світ!
@@ -78,7 +80,7 @@ Lets say we have this JSON as locale:
 ```
 To parse variables we gave as `{}`, we need to add one more argument to `.getString()` function, it(argument) takes object that takes variable name(`user`, `server`) as key, and "to replace" as value, for example:
 ```js
-const locales = new Locales("./locales/");
+const locales = new Locales({path: "./locales/"});
 
 const english = locales.getLocale('en-US');
 
@@ -90,4 +92,16 @@ console.log({
         server: 'LocaleUtil support' 
     })                                                                                   // welcomeEnglish: Welcome, Favn, to LocaleUtil support!
 });
+```
+
+### Getting all translates by key
+Lets say we have translates for 10 languages, sometimes we will need to get all translates of one key, LocaleUtil allows us to do it!<br>
+`<Locales>.getAllStrings(key: string, options?: object)` will return object with language name as key and translation as value
+Note, that you can get all translates __only__ of cached files, I would highly recommend to add `fetchOnStart: true` as `Locales` option.
+```js
+const locales = new Locales({path: "./locales/", fetchOnStart: true});
+
+locales.once('ready', ()=>{
+    console.log(locales.getAllStrings('hello.user', {user: 'Favn'})); //{ 'en-US': 'Welcome, Favn!', 'uk-UA': 'Привіт, Favn!', 'kz-KZ': 'Сәлем, Favn!' }
+})
 ```

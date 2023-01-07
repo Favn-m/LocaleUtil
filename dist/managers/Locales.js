@@ -1,13 +1,25 @@
 import LocaleManager from "./LocaleManager.js";
-export default class Locales {
+import fs from "fs/promises";
+import { EventEmitter } from "stream";
+export default class Locales extends EventEmitter {
     _locales = new Map;
     _path;
-    /**
-     *
-     * @param path Path to the folder where locales are located
-     */
-    constructor(path = './locales') {
-        this.setPath(path);
+    constructor(options = { path: './locales', fetchAllOnStart: true }) {
+        super();
+        this.setPath(options.path);
+        if (options.fetchAllOnStart)
+            this.fetchAllLocales().then(() => { super.emit('ready', this); });
+        else
+            super.emit('ready', this);
+    }
+    async fetchAllLocales() {
+        const files = await fs.readdir(this._path);
+        const promises = [];
+        for (const file of files) {
+            if (file.endsWith('.json'))
+                promises.push(this.getLocale(file.slice(0, file.length - 5)));
+        }
+        return await Promise.all(promises);
     }
     /**
      *
@@ -32,6 +44,13 @@ export default class Locales {
     }
     async getString(language, key, options) {
         const locale = await this.getLocale(language);
-        return await locale.getString(key, options);
+        return locale.getString(key, options);
+    }
+    getAllStrings(key, options) {
+        const result = {};
+        for (const [locale, value] of this._locales.entries()) {
+            result[locale] = value.getString(key, options);
+        }
+        return result;
     }
 }
