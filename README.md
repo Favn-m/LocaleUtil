@@ -4,6 +4,7 @@ Util to easily manage locales, working with json<br>
  `-` Almost fully uses promises<br>
  `-` Supports object path*<br>
 \*Will be explained below
+
 ##Initializing
 
 First thing you will need is to create folder that will contain all locale files, let's say it will be `/locales/`<br>
