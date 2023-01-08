@@ -40,6 +40,12 @@ export class Locales extends EventEmitter{
      */
     public setPath(path: string): Locales;
     public getLocale(language: string): Promise<LocaleManager>;
+    /**
+     * Gets locale from cache. 
+     * All locales are already cached with `fetchAllOnStart: true`
+     * @param language 
+     */
+    public getCachedLocale(language: string): LocaleManager;
     
     public getString(language: string, key: string, options?: object): Promise<string>;
     public getAllStrings(key: string, options?: SelectLocaleOptions): object
