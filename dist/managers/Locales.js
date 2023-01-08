@@ -4,7 +4,7 @@ import EventEmitter from "events";
 export default class Locales extends EventEmitter {
     _locales = new Map;
     _path;
-    constructor(options = { path: './locales', fetchAllOnStart: true }) {
+    constructor(options = { path: './locales', fetchAllOnStart: false }) {
         super();
         this.setPath(options.path);
         if (options.fetchAllOnStart)
@@ -41,6 +41,9 @@ export default class Locales extends EventEmitter {
         const result = await LocaleManager.getByLanguage(this, language);
         this._locales.set(language, result);
         return result;
+    }
+    getCachedLocale(language) {
+        return this._locales.get(language);
     }
     async getString(language, key, replaceOptions) {
         const locale = await this.getLocale(language);
