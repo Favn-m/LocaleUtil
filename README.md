@@ -5,7 +5,7 @@ Util to easily manage locales, working with json<br>
  `-` Supports object path*<br>
 \*Will be explained below
 
-##Initializing
+## Initializing
 
 First thing you will need is to create folder that will contain all locale files, let's say it will be `/locales/`<br>
 Now lets create example json files, that will contain our translations with keys<br>
