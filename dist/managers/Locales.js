@@ -46,7 +46,7 @@ export default class Locales extends EventEmitter {
             return result;
         }
         catch (e) {
-            return null;
+            return this.getLocale(this.defaultLanguage);
         }
     }
     getCachedLocale(language) {
