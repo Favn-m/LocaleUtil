@@ -20,6 +20,11 @@ interface LocalesOptions {
      * Note, that if you want to get all translations for specific string, it will get only from cached locales(locales you have already worked with after process started)
      */
     fetchAllOnStart?: boolean
+
+    /**
+     * If locale you are trying to get doesn't exists, default language locale will be returned
+     */
+    defaultLanguage?: string
 }
 
 interface SelectLocaleOptions {

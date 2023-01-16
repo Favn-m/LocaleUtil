@@ -7,8 +7,8 @@ export default class Locales extends EventEmitter {
     defaultLanguage;
     constructor(options = { path: './locales', fetchAllOnStart: false, defaultLanguage: 'en-US' }) {
         super();
-        this.setPath(options.path);
-        this.defaultLanguage = options.defaultLanguage;
+        this.setPath(options.path ?? './locales');
+        this.defaultLanguage = options.defaultLanguage ?? 'en-US';
         if (options.fetchAllOnStart)
             this.fetchAllLocales().then(() => { super.emit('ready', this); });
         else
