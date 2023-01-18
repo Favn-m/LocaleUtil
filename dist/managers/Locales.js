@@ -50,7 +50,7 @@ export default class Locales extends EventEmitter {
         }
     }
     getCachedLocale(language) {
-        return this._locales.get(language);
+        return this._locales.get(language) ?? this._locales.get(this.defaultLanguage);
     }
     async getString(language, key, replaceOptions) {
         const locale = await this.getLocale(language);
