@@ -65,8 +65,11 @@ export default class Locales extends EventEmitter {
         }
         else {
             for (const [locale, value] of this._locales.entries()) {
-                if (!selectOptions?.exclude?.includes(locale))
-                    result[locale] = value.getString(key, selectOptions.replace);
+                if (!selectOptions?.exclude?.includes(locale)) {
+                    const translate = value.getString(key, selectOptions.replace);
+                    if (translate)
+                        result[locale] = translate;
+                }
             }
         }
         return result;
