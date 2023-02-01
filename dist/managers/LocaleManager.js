@@ -37,6 +37,8 @@ export default class LocaleManager {
         }
         else {
             let result = this._localeKeys.get(key);
+            if (!result)
+                return undefined;
             for (let key in options) {
                 const regex = new RegExp(`(?<=[^\\\\]){${key.replace(`\\`, `\\\\`)}}`, 'g');
                 result = result.replace(regex, options[key]);
